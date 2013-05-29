@@ -1,4 +1,6 @@
 ####################################################################################
+ANNOT="/home/smarguer/smarguer/SAM_SCRIPTS/R_SCRIPTS/"
+####################################################################################
 viewSEQ.dots<-function(c1=chr1, c2=chr2, c3=chr3, range=c(1478,1490),scale=c(-4,20), highlights=c(1487000,1489000,1481000,1485000), gff=mygff,chr=1, sep=F,...){
 grid.newpage()
 if (chr==1){n=c1}
@@ -80,7 +82,7 @@ MyplotAlong(highlight1=highlight1,highlight2=highlight2, highlight3=highlight3, 
 gc()
 }
 ####################################################################################
-viewGEN.sep<-function(gene='SPAC1250.05',zoom=0, c1=chr1, c2=chr2, c3=chr3,flank=2,scale=c(-4,20), gff=mygff, sep=T,high=c(0,0),col=0,verbose=T,mixScale=FALSE,scaleD=NULL,scaleU=NULL,...){
+viewGEN.sep<-function(gene='SPAC1250.05',zoom=0, c1=chr1, c2=chr2, c3=chr3,flank=2,scale=c(-4,20), gff=mygff, sep=T,high=c(0,0),col=0,verbose=T,mixScale=FALSE,scaleD=NULL,scaleU=NULL,my.what="dots",...){
 grid.newpage()
 t=getc(gene,all=T)
 chr=as.numeric(t[2,2])
@@ -150,7 +152,7 @@ print(start)
 print(end)
 }
 #str(paste("chr",chr,sep=""))
-MyplotAlong(highlight1=highlight1, highlight2=highlight2, highlight3=highlight3, highlight4=highlight4, y = as.matrix(n), chr = chr, coord = range * 1000, gff = mygff, probeAnno=probeAnno, what=c("dots"),sepPlots=sep, featureExclude = c("LTR","misc_RNA","new","new_antisense", "gap","3'UTR", "5'UTR", "CDS_motif", "gap", "mRNA", "polyA_site", "promoter","rep_origin", "repeat_unit","polyA_signal","BLASTN_HIT", "trans","utr_intron"),mixScale=mixScale,scaleU=scaleU,scaleD=scaleD)
+MyplotAlong(highlight1=highlight1, highlight2=highlight2, highlight3=highlight3, highlight4=highlight4, y = as.matrix(n), chr = chr, coord = range * 1000, gff = mygff, probeAnno=probeAnno, what=my.what,sepPlots=sep, featureExclude = c("LTR","misc_RNA","new","new_antisense", "gap","3'UTR", "5'UTR", "CDS_motif", "gap", "mRNA", "polyA_site", "promoter","rep_origin", "repeat_unit","polyA_signal","BLASTN_HIT", "trans","utr_intron"),mixScale=mixScale,scaleU=scaleU,scaleD=scaleD)
 gc(verbose=F)
 }
 ###############################################################################################
@@ -178,7 +180,7 @@ mygff=gff[mygff,]
 return(mygff)
 }
 ################################################################################################
-getc.trans=read.delim("allNames_030811.TXT2", stringsAsFactors=F)
+getc.trans=read.delim(paste(ANNOT,"allNames_030811.TXT2",sep=''), stringsAsFactors=F)
 ################################################################################################
 getc=function(gene,all=F)
 {
@@ -508,7 +510,7 @@ MyplotAlongSeq<-
 function (segObj, y, probeAnno, gff, isDirectHybe = FALSE, what = c("dots"), 
     chr, coord, highlight1,highlight2, colors, doLegend = FALSE, featureExclude = c("chromosome", 
         "nucleotide_match", "insertion"), featureColorScheme = 1, 
-    extras, rowNamesHeatmap, rowNamesExtras, ylab, ylabExtras, 
+    extras=NULL, rowNamesHeatmap, rowNamesExtras, ylab, ylabExtras, 
     main, colHeatmap = colorRamp(brewer.pal(9, "YlOrBr")), colExtras = colorRamp(brewer.pal(9, 
         "Reds")), sepPlots = FALSE, reOrder = TRUE, mixScale=FALSE, scaleD=NULL, scaleU=NULL, ...) 
 {
